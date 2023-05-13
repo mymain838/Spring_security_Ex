@@ -1,10 +1,7 @@
 package com.mymain838.security1.config.oauth;
 
 import com.mymain838.security1.auth.PrincipalDetails;
-import com.mymain838.security1.config.oauth.provider.FacebookUserInfo;
-import com.mymain838.security1.config.oauth.provider.GoogleUserInfo;
-import com.mymain838.security1.config.oauth.provider.NaverUserInfo;
-import com.mymain838.security1.config.oauth.provider.OAuth2UserInfo;
+import com.mymain838.security1.config.oauth.provider.*;
 import com.mymain838.security1.model.User;
 import com.mymain838.security1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +42,10 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
             oAuth2UserInfo = new FacebookUserInfo(oAuth2User.getAttributes());
         } else if (userRequest.getClientRegistration().getRegistrationId().equals("naver")) {
             System.out.println("네이버 로그인");
-            oAuth2UserInfo = new NaverUserInfo((Map<String, Object>) oAuth2User.getAttributes().get("response"));
+            oAuth2UserInfo = new NaverUserInfo((Map<String, Object>) oAuth2User.getAttributes());
+        }else if (userRequest.getClientRegistration().getRegistrationId().equals("kakao")) {
+            System.out.println("카카오 로그인");
+            oAuth2UserInfo = new KakaoUserInfo((Map<String, Object>) oAuth2User.getAttributes());
         } else {
             System.out.println("다른 외부로그인은 지원하지 않습니다.");
         }
